@@ -1,193 +1,282 @@
-# 🎓 Khóa Luận Tốt Nghiệp: So Sánh Hiệu Suất Các Thuật Toán Federated Learning
+# Federated Learning Benchmark (FedAvg vs FedProx vs FedAdam)
 
-[![Grade](https://img.shields.io/badge/Grade-9.0-brightgreen.svg)](https://github.com/LuongDat9999/Federated_Learning_Compare_FedAvg_FedProx_FedAdam)
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.8.0-red.svg)](https://pytorch.org)
-[![Flower](https://img.shields.io/badge/Flower-1.20.0-purple.svg)](https://flower.dev)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red.svg)](https://pytorch.org)
+[![Flower](https://img.shields.io/badge/Flower-flwr-purple.svg)](https://flower.dev)
 
-## 📋 Tổng Quan
+A reproducible benchmark comparing **FedAvg**, **FedProx**, and **FedAdam** on **CIFAR-10** and **Fashion-MNIST** under **non-IID client data** (Dirichlet split with \( \alpha \in \{0.3, 0.9\}\)).
 
-Đây là repository chứa toàn bộ code và kết quả thí nghiệm cho **Khóa Luận Tốt Nghiệp** với đề tài: **"So sánh hiệu suất các thuật toán Federated Learning: FedAvg, FedProx và FedAdam trên các bộ dữ liệu CIFAR-10 và Fashion-MNIST"**.
+This repository contains experiment notebooks, result artifacts, and a full report in PDF.
 
-### 🏆 Kết Quả Đạt Được
-- **Điểm số**: **9.5/10** ⭐
-- **Đánh giá**: Xuất sắc
-- **Thời gian nghiên cứu**: 3 tháng
-- Số lượng sinh viên thực hiện: 2 người
-- **Số lượng thí nghiệm**: 50+ thí nghiệm với các cấu hình khác nhau
+## Project context
 
-## 🎯 Mục Tiêu Nghiên Cứu
+This benchmark was developed as part of an undergraduate thesis project focused on:
 
-Nghiên cứu này tập trung vào việc so sánh hiệu suất của ba thuật toán Federated Learning phổ biến:
+- Comparing convergence and final performance across algorithms
+- Measuring the impact of non-IID data (varying \( \alpha \))
+- Analyzing training time and communication-related trade-offs
+- Tuning hyperparameters (notably for FedAdam)
 
-1. **FedAvg** (Federated Averaging) - Thuật toán cơ bản
-2. **FedProx** - Thuật toán với proximal term để xử lý heterogeneity
-3. **FedAdam** - Thuật toán sử dụng adaptive optimization
+## Highlights
 
-### 🔬 Các Vấn Đề Nghiên Cứu
-- So sánh hiệu suất convergence của các thuật toán
-- Đánh giá tác động của non-IID data distribution (α = 0.3, 0.9)
-- Phân tích thời gian training và communication overhead
-- Tối ưu hóa hyperparameters cho FedAdam
+- **Algorithms**: FedAvg, FedProx, FedAdam
+- **Datasets**: CIFAR-10, Fashion-MNIST
+- **Non-IID**: Dirichlet partition with \( \alpha = 0.3 \) (more heterogeneous) and \( \alpha = 0.9 \) (less heterogeneous)
+- **Framework**: Flower (`flwr`) + PyTorch
+- **Typical experimental setup**:
+  - 10 clients
+  - 100 communication rounds
 
-## 📊 Bộ Dữ Liệu Thí Nghiệm
+## Datasets (quick look)
 
-| Dataset | Classes | Samples | Image Size | Non-IID Levels |
-|---------|---------|---------|------------|----------------|
-| **CIFAR-10** | 10 | 60,000 | 32×32×3 | α = 0.3, 0.9 |
-| **Fashion-MNIST** | 10 | 70,000 | 28×28×1 | α = 0.3, 0.9 |
+<div align="center">
 
-## 🏗️ Cấu Trúc Dự Án
+| Dataset | Classes | Samples | Image size |
+|---|---:|---:|---|
+| CIFAR-10 | 10 | 60,000 | 32×32×3 |
+| Fashion-MNIST | 10 | 70,000 | 28×28×1 |
 
-```
-Federated_Learning_Compare_FedAvg_FedProx_FedAdam/
-├── 📁 CIFAR10_result_new/           # Kết quả thí nghiệm CIFAR-10
-│   ├── 📁 alpha_03/                 # Non-IID level α = 0.3
-│   ├── 📁 alpha_09/                 # Non-IID level α = 0.9
-│   └── 📓 cifar10_compaire_result.ipynb
-├── 📁 F-MNIST_result_new/           # Kết quả thí nghiệm Fashion-MNIST
-│   ├── 📁 alpha_03/
-│   ├── 📁 alpha_09/
-│   └── 📓 fmnist_compaire_result.ipynb
-├── 📁 GridSearch_Adam_result/       # Kết quả tối ưu hóa FedAdam
-│   ├── 📁 fl_gridsearch_final_results/
-│   ├── 📁 fl_results_gs_cl/
-│   └── 📓 GridSearch_Time_Adam_CLIENT.ipynb
-├── 📁 GridSearch_Prox_result/       # Kết quả tối ưu hóa FedProx
-├── 📓 FMNIST_Time_*_fl_pretrain.ipynb  # Notebooks phân tích thời gian
-├── 📓 Time_*_fl_pretrain_*.ipynb       # Notebooks thí nghiệm chính
-├── 📄 requirements.txt              # Dependencies
-├── 📄 Report_FL_Compare.pdf        # 📚 Báo cáo khóa luận đầy đủ
-└── 📄 Báo_cáo_KLTN.pdf             # Báo cáo khóa luận (backup)
-```
+</div>
 
-## 📚 Báo Cáo Khóa Luận
+<p align="center">
+  <img src="Imgs/Cifar-Data.jpg" alt="CIFAR-10 samples" width="30%" style="margin-right: 20px;" />
+  <img src="Imgs/FMNIST-dataset.jpg" alt="Fashion-MNIST samples" width="26%" />
+</p>
 
-### 📄 **[Report_FL_Compare.pdf](Report_FL_Compare.pdf)** - Báo cáo đầy đủ
+## Results (visual overview)
 
-[![PDF](https://img.shields.io/badge/📄-Báo%20Cáo%20PDF-red.svg)](Report_FL_Compare.pdf)
-[![Size](https://img.shields.io/badge/Size-6MB-blue.svg)](Report_FL_Compare.pdf)
-[![Grade](https://img.shields.io/badge/Điểm-9.0-brightgreen.svg)](Report_FL_Compare.pdf)
+### Summary table
 
-**📖 Nội dung báo cáo bao gồm:**
+The following table aggregates the final validation accuracy, the average validation accuracy over the last 20 rounds, and total training time.
 
-- **🎯 Tổng quan nghiên cứu**: Mục tiêu, phạm vi và đóng góp khoa học
-- **📚 Tổng quan lý thuyết**: Cơ sở lý thuyết về Federated Learning
-- **🔬 Phương pháp nghiên cứu**: Thiết kế thí nghiệm và metrics đánh giá
-- **📊 Kết quả thí nghiệm**: Phân tích chi tiết hiệu suất các thuật toán
-- **📈 Biểu đồ và visualization**: Convergence curves, accuracy comparisons
-- **🎓 Kết luận và hướng phát triển**: Đóng góp và đề xuất nghiên cứu tương lai
-- **📖 Tài liệu tham khảo**: Danh sách đầy đủ các paper liên quan
+<div align="center">
 
-> 💡 **Lưu ý**: Đây là báo cáo khóa luận tốt nghiệp đạt điểm **9.5/10**, được đánh giá xuất sắc bởi hội đồng chấm thi(gồm 3 giảng viên).
+| Dataset        | α   | Algorithm | Final val acc (%) | Mean val acc (last 20 rounds) (%) | Total time (min) |
+|---------------|-----|-----------|--------------------|------------------------------------|------------------|
+| Fashion-MNIST | 0.3 | FedAvg    | 91.33              | 90.58                              | 6048             |
+| Fashion-MNIST | 0.3 | FedProx   | 92.11              | 90.55                              | 9979             |
+| Fashion-MNIST | 0.3 | FedAdam   | **93.99**          | **90.68**                          | 6309             |
+| Fashion-MNIST | 0.9 | FedAvg    | 91.24              | 92.33                              | 6478             |
+| Fashion-MNIST | 0.9 | FedProx   | 92.66              | **92.49**                          | 9468             |
+| Fashion-MNIST | 0.9 | FedAdam   | **93.32**          | 92.22                              | **6129**         |
+| CIFAR-10      | 0.3 | FedAvg    | 85.71              | 84.74                              | **10099**        |
+| CIFAR-10      | 0.3 | FedProx   | **89.79**          | 86.87                              | 12671            |
+| CIFAR-10      | 0.3 | FedAdam   | 89.38              | **88.74**                          | 10585            |
+| CIFAR-10      | 0.9 | FedAvg    | 89.56              | 88.29                              | **10401**        |
+| CIFAR-10      | 0.9 | FedProx   | **91.46**          | **91.26**                          | 13038            |
+| CIFAR-10      | 0.9 | FedAdam   | 91.24              | 91.36                              | 10589            |
 
----
+</div>
 
-## 🚀 Cài Đặt và Chạy Thí Nghiệm
+### Accuracy vs. round (training and validation)
 
-### 1. Cài Đặt Dependencies
+<div align="center">
 
-```bash
-pip install -r requirements.txt
-```
+  <table>
+    <tr>
+      <td align="center">
+        <img src="Imgs/fed_cifar10.png"
+             alt="CIFAR-10 training and validation accuracy"
+             width="75%" />
+        <br />
+        <strong>CIFAR-10</strong>
+      </td>
+      <td align="center">
+        <img src="Imgs/fed_fmnist.png"
+             alt="Fashion-MNIST training and validation accuracy"
+             width="75%" />
+        <br />
+        <strong>Fashion-MNIST</strong>
+      </td>
+    </tr>
+  </table>
 
-### 2. Các Thành Phần Chính
+</div>
 
-- **Flower Framework**: `flwr==1.20.0` - Framework chính cho Federated Learning
-- **PyTorch**: `torch==2.8.0+cu126` - Deep learning framework
-- **Data Processing**: `pandas`, `numpy` - Xử lý dữ liệu
-- **Visualization**: `matplotlib`, `seaborn` - Trực quan hóa kết quả
+### Convergence trend (per-round change)
 
-### 3. Chạy Thí Nghiệm
+These plots show the per-round accuracy change for \( \alpha = 0.3 \) and \( \alpha = 0.9 \).
 
-```bash
-# Chạy thí nghiệm FedAvg trên CIFAR-10
-jupyter notebook Time_avg_fl_pretrain_iid_100.ipynb
+<div align="center">
 
-# Chạy thí nghiệm FedProx trên Fashion-MNIST
-jupyter notebook FMNIST_Time_prox_fl_pretrain-pageper.ipynb
+  <p>
+    <img src="Imgs/Convergence_cifar10.png"
+         alt="CIFAR-10 convergence trend"
+         width="75%" />
+    <br />
+    <strong>CIFAR-10</strong>
+  </p>
 
-# Chạy thí nghiệm FedAdam với grid search
-jupyter notebook GridSearch_Time_Adam_CLIENT.ipynb
-```
+  <p>
+    <img src="Imgs/Convergence_fmnist.png"
+         alt="Fashion-MNIST convergence trend"
+         width="75%" />
+    <br />
+    <strong>Fashion-MNIST</strong>
+  </p>
 
-## 📈 Kết Quả Chính
+</div>
 
-### 🎯 Hiệu Suất Convergence
+## Method overview
 
-| Algorithm | CIFAR-10 (α=0.3) | CIFAR-10 (α=0.9) | Fashion-MNIST (α=0.3) | Fashion-MNIST (α=0.9) |
-|-----------|------------------|------------------|----------------------|----------------------|
-| **FedAvg** | 85.2% | 87.8% | 89.1% | 91.3% |
-| **FedProx** | 86.7% | 88.9% | 90.2% | 92.1% |
-| **FedAdam** | **88.4%** | **90.1%** | **91.8%** | **93.2%** |
+### Algorithms
 
-### ⏱️ Thời Gian Training
+1. **FedAvg**: the baseline federated averaging method
+2. **FedProx**: adds a proximal term to improve robustness under heterogeneity
+3. **FedAdam**: adaptive optimization at the server (federated Adam)
 
-- **FedAvg**: Nhanh nhất, ít communication overhead
-- **FedProx**: Trung bình, cân bằng giữa hiệu suất và tốc độ
-- **FedAdam**: Chậm nhất nhưng đạt accuracy cao nhất
+### Non-IID partitioning
 
-### 🔧 Grid Search Results
+Clients receive data via a Dirichlet distribution with concentration parameter \( \alpha \):
 
-**FedAdam Optimal Parameters:**
-- Learning Rate: `0.01`
+- \( \alpha = 0.3 \): more skewed (more heterogeneous clients)
+- \( \alpha = 0.9 \): less skewed (more homogeneous clients)
+
+### Metrics
+
+- **Validation accuracy**
+- **Convergence speed** (rounds needed to reach a target regime)
+- **Training time** (wall-clock time)
+- (Optionally) communication-related quantities depending on the notebook
+
+### FedAdam tuning (reference)
+
+The report and grid-search artifacts include a tuned configuration for FedAdam. A representative set of parameters used in the experiments:
+
+- Learning rate: `0.01`
 - Beta1: `0.9`
 - Beta2: `0.999`
 - Epsilon: `1e-8`
 
-## 📊 Visualization
+## Experimental setup (more detail)
 
-Các notebook trong repository chứa:
-- 📈 Biểu đồ convergence curves
-- 📊 So sánh accuracy theo rounds
-- ⏱️ Phân tích thời gian training
-- 🎯 Heatmap kết quả grid search
+### Federated configuration
 
-## 🔬 Phương Pháp Nghiên Cứu
+- **Number of clients**: 10 participating clients
+- **Client participation**: all clients participate in every round (full participation)
+- **Rounds**: 100 communication rounds
+- **Local training**:
+  - Local optimizer: SGD or Adam (depending on notebook)
+  - Local epochs per round: typically 1–5 (see each notebook for the exact value)
+  - Batch size: commonly 32 or 64
 
-### 1. **Thiết Kế Thí Nghiệm**
-- 10 clients trong mỗi thí nghiệm
-- 100 communication rounds
-- Non-IID data distribution với Dirichlet parameter α
-- Pretrained models để tăng tốc convergence
+### Models
 
-### 2. **Metrics Đánh Giá**
-- **Accuracy**: Độ chính xác trên test set
-- **Convergence Speed**: Số rounds để đạt target accuracy
-- **Communication Efficiency**: Bytes truyền tải
-- **Training Time**: Thời gian thực tế
+While the exact architectures are defined inside the notebooks, the general choices are:
 
-### 3. **Statistical Analysis**
-- T-test để so sánh significance
-- Confidence intervals cho các metrics
-- Multiple runs để đảm bảo reproducibility
+- **CIFAR-10**: a convolutional network (Conv2D + pooling + fully connected layers)
+- **Fashion-MNIST**: a lighter CNN suitable for 28×28 grayscale images
 
-## 🎓 Đóng Góp Khoa Học
+### Hardware & runtime notes
 
-### 📚 Lý Thuyết
-- So sánh comprehensive 3 thuật toán FL phổ biến
-- Phân tích tác động của non-IID data distribution
-- Đề xuất optimal hyperparameters cho FedAdam
+- Designed to run on a single machine with a GPU, but CPUs also work (with longer training time).
+- Training time in the summary table is measured end-to-end for the full 100 rounds.
 
-### 💻 Thực Tiễn
-- Code implementation hoàn chỉnh và reproducible
-- Detailed experimental results và analysis
-- Framework có thể mở rộng cho các thuật toán FL khác
+## Reproducing experiments
 
-## 📖 Tài Liệu Tham Khảo
+Each family of experiments is encapsulated in its own notebook and writes results to a corresponding folder.
 
-1. McMahan, B., et al. "Communication-efficient learning of deep networks from decentralized data." AISTATS 2017.
-2. Li, T., et al. "Federated optimization in heterogeneous networks." MLSys 2020.
-3. Reddi, S., et al. "Adaptive federated optimization." ICLR 2021.
+### CIFAR-10
 
+- **Main notebooks** (examples):
+  - `Fed_CIFAR10/CIFAR10_FedAvg.ipynb`
+  - `Fed_CIFAR10/CIFAR10_FedProx.ipynb`
+  - `Fed_CIFAR10/CIFAR10_FedAdam.ipynb`
+- **Outputs**:
+  - `Fed_CIFAR10/alpha_03/` – non-IID with \( \alpha = 0.3 \)
+  - `Fed_CIFAR10/alpha_09/` – non-IID with \( \alpha = 0.9 \)
 
-## 🙏 Lời Cảm Ơn
+### Fashion-MNIST
 
-- Giảng viên hướng dẫn: **ThS. Huỳnh Thành Lộc**
-- Partner: Nguyễn Anh Huy
-- Khoa Công nghệ Thông tin, Trường Đại học HUFLIT
-- Cộng đồng Flower Framework và PyTorch
+- **Main notebooks** (examples):
+  - `Fed_FMNIST/FMNIST_FedAvg.ipynb`
+  - `Fed_FMNIST/FMNIST_FedProx.ipynb`
+  - `Fed_FMNIST/FMNIST_FedAdam.ipynb`
+- **Outputs**:
+  - `Fed_FMNIST/alpha_03/`
+  - `Fed_FMNIST/alpha_09/`
 
----
+### Hyperparameter search
 
-⭐ **Nếu bạn thấy dự án này hữu ích, hãy cho một star!** ⭐
+- **FedAdam**:
+  - Notebooks: `GridSearch/FedAdam/GridSearch_Time_Adam_CLIENT.ipynb`, `GridSearch/FedAdam/GridSearch_Time_Adam_SERVER.ipynb`, and comparison notebooks in the same folder
+  - Results: `GridSearch/FedAdam/fl_gridsearch_final_results/` and `GridSearch/FedAdam/fl_results_gs_cl/`
+- **FedProx**:
+  - Notebook: `GridSearch/FedProx/prox-fl-pretrain-noniid-pageper.ipynb`
+  - Results: artifacts written under `GridSearch/FedProx/`
+
+For exact hyperparameters, please refer directly to the corresponding notebook cells (learning rates, proximal coefficients, momentum parameters, schedulers, etc.).
+
+## Setup
+
+### Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Run notebooks
+
+Start Jupyter and open any of the experiment notebooks:
+
+```bash
+jupyter notebook Fed_CIFAR10/CIFAR10_FedAvg.ipynb
+jupyter notebook Fed_CIFAR10/CIFAR10_FedProx.ipynb
+jupyter notebook Fed_CIFAR10/CIFAR10_FedAdam.ipynb
+
+# or for Fashion-MNIST
+jupyter notebook Fed_FMNIST/FMNIST_FedAvg.ipynb
+```
+
+## Repository contents
+
+```
+.
+├── Fed_CIFAR10/
+│   ├── CIFAR10_FedAvg.ipynb          # CIFAR-10 FedAvg experiment
+│   ├── CIFAR10_FedProx.ipynb         # CIFAR-10 FedProx experiment
+│   ├── CIFAR10_FedAdam.ipynb         # CIFAR-10 FedAdam experiment
+│   ├── cifar10_compaire_result.ipynb # Aggregated CIFAR-10 analysis
+│   ├── alpha_03/                     # CIFAR-10 results for α = 0.3
+│   └── alpha_09/                     # CIFAR-10 results for α = 0.9
+├── Fed_FMNIST/
+│   ├── FMNIST_FedAvg.ipynb           # Fashion-MNIST FedAvg experiment
+│   ├── FMNIST_FedProx.ipynb          # Fashion-MNIST FedProx experiment
+│   ├── FMNIST_FedAdam.ipynb          # Fashion-MNIST FedAdam experiment
+│   ├── fmnist_compaire_result.ipynb  # Aggregated Fashion-MNIST analysis
+│   ├── alpha_03/                     # Fashion-MNIST results for α = 0.3
+│   └── alpha_09/                     # Fashion-MNIST results for α = 0.9
+├── GridSearch/
+│   ├── FedAdam/
+│   │   ├── GridSearch_Time_Adam_CLIENT.ipynb
+│   │   ├── GridSearch_Time_Adam_SERVER.ipynb
+│   │   ├── compaire_girdsearch_adam.ipynb
+│   │   ├── compaire_girdsearch_adam_etal.ipynb
+│   │   ├── fl_gridsearch_final_results/  # Aggregated FedAdam grid-search results
+│   │   └── fl_results_gs_cl/             # Client-level FedAdam search logs
+│   └── FedProx/
+│       └── prox-fl-pretrain-noniid-pageper.ipynb
+├── Imgs/                             # All figures used in the README and report
+├── Paper-Research/                   # Reference papers (PDFs) grouped by algorithm
+├── requirements.txt                  # Python dependencies
+├── Report_FL_Compare.pdf             # Full thesis/report in PDF
+└── .gitignore
+```
+
+## Report
+
+- **Full PDF**: [`Report_FL_Compare.pdf`](Report_FL_Compare.pdf)
+
+## Authors & acknowledgement
+
+- **Maintainer (GitHub repo owner)**: Desuuy
+
+Special thanks to advisors/instructors and the Flower + PyTorch communities.
+
+## Citation
+
+If you use this benchmark in a project or report, please cite the original papers:
+
+- McMahan et al., *Communication-efficient learning of deep networks from decentralized data*, AISTATS 2017. (FedAvg)
+- Li et al., *Federated optimization in heterogeneous networks*, MLSys 2020. (FedProx)
+- Reddi et al., *Adaptive federated optimization*, ICLR 2021. (FedAdam)
