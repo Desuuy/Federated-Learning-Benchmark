@@ -4,7 +4,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red.svg)](https://pytorch.org)
 [![Flower](https://img.shields.io/badge/Flower-flwr-purple.svg)](https://flower.dev)
 
-A reproducible benchmark comparing **FedAvg**, **FedProx**, and **FedAdam** on **CIFAR-10** and **Fashion-MNIST** under **non-IID client data** (Dirichlet split with \( \alpha \in \{0.3, 0.9\}\)).
+A reproducible benchmark comparing **FedAvg**, **FedProx**, and **FedAdam** on **CIFAR-10** and **Fashion-MNIST** under **non-IID client data** (Dirichlet split with $$\( \alpha \in \{0.3, 0.9\}\)$$.
 
 This repository contains experiment notebooks, result artifacts, and a full report in PDF.
 
@@ -13,7 +13,7 @@ This repository contains experiment notebooks, result artifacts, and a full repo
 This benchmark was developed as part of an undergraduate thesis project focused on:
 
 - Comparing convergence and final performance across algorithms
-- Measuring the impact of non-IID data (varying \( \alpha \))
+- Measuring the impact of non-IID data (varying $$\( \alpha \)$$)
 - Analyzing training time and communication-related trade-offs
 - Tuning hyperparameters (notably for FedAdam)
 
@@ -21,7 +21,7 @@ This benchmark was developed as part of an undergraduate thesis project focused 
 
 - **Algorithms**: FedAvg, FedProx, FedAdam
 - **Datasets**: CIFAR-10, Fashion-MNIST
-- **Non-IID**: Dirichlet partition with \( \alpha = 0.3 \) (more heterogeneous) and \( \alpha = 0.9 \) (less heterogeneous)
+- **Non-IID**: Dirichlet partition with \( $$\alpha = 0.3 \$$) (more heterogeneous) and \( $$\alpha = 0.9 \$$) (less heterogeneous)
 - **Framework**: Flower (`flwr`) + PyTorch
 - **Typical experimental setup**:
   - 10 clients
@@ -95,7 +95,7 @@ The following table aggregates the final validation accuracy, the average valida
 
 ### Convergence trend (per-round change)
 
-These plots show the per-round accuracy change for \( \alpha = 0.3 \) and \( \alpha = 0.9 \).
+These plots show the per-round accuracy change for \( $$\alpha = 0.3 \$$) and \( $$\alpha = 0.9 \$$).
 
 <div align="center">
 
@@ -127,10 +127,10 @@ These plots show the per-round accuracy change for \( \alpha = 0.3 \) and \( \al
 
 ### Non-IID partitioning
 
-Clients receive data via a Dirichlet distribution with concentration parameter \( \alpha \):
+Clients receive data via a Dirichlet distribution with concentration parameter $$\( \alpha \)$$:
 
-- \( \alpha = 0.3 \): more skewed (more heterogeneous clients)
-- \( \alpha = 0.9 \): less skewed (more homogeneous clients)
+- $$\( \alpha = 0.3 \)$$: more skewed (more heterogeneous clients)
+- $$\( \alpha = 0.9 \)$$: less skewed (more homogeneous clients)
 
 ### Metrics
 
@@ -148,7 +148,7 @@ The report and grid-search artifacts include a tuned configuration for FedAdam. 
 - Beta2: `0.999`
 - Epsilon: `1e-8`
 
-## Experimental setup (more detail)
+## Experimental setup (more details)
 
 ### Federated configuration
 
@@ -183,8 +183,8 @@ Each family of experiments is encapsulated in its own notebook and writes result
   - `Fed_CIFAR10/CIFAR10_FedProx.ipynb`
   - `Fed_CIFAR10/CIFAR10_FedAdam.ipynb`
 - **Outputs**:
-  - `Fed_CIFAR10/alpha_03/` – non-IID with \( \alpha = 0.3 \)
-  - `Fed_CIFAR10/alpha_09/` – non-IID with \( \alpha = 0.9 \)
+  - `Fed_CIFAR10/alpha_03/` – non-IID with $$\( \alpha = 0.3 \)$$
+  - `Fed_CIFAR10/alpha_09/` – non-IID with $$\( \alpha = 0.9 \)$$
 
 ### Fashion-MNIST
 
