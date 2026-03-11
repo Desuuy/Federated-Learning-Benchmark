@@ -269,7 +269,9 @@ jupyter notebook Fed_FMNIST/FMNIST_FedAvg.ipynb
 
 ## Authors & acknowledgement
 
-- **Maintainer (GitHub repo owner)**: Desuuy
+**Maintainer (GitHub repo owner)**:
+-  Desuuy
+-  [LuongDat9999](https://github.com/LuongDat9999)
 
 Special thanks to advisors/instructors and the Flower + PyTorch communities.
 
