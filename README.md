@@ -279,6 +279,6 @@ jupyter notebook Fed_FMNIST/FMNIST_FedAvg.ipynb
 
 If you use this benchmark in a project or report, please cite the original papers:
 
-- McMahan et al., *Communication-efficient learning of deep networks from decentralized data*, AISTATS 2017. (FedAvg)
-- Li et al., *Federated optimization in heterogeneous networks*, MLSys 2020. (FedProx)
-- Reddi et al., *Adaptive federated optimization*, ICLR 2021. (FedAdam)
+- [McMahan et al., *Communication-efficient learning of deep networks from decentralized data*, AISTATS 2017. (FedAvg)](https://arxiv.org/abs/1602.05629)
+- [Li et al., *Federated optimization in heterogeneous networks*, MLSys 2020. (FedProx)](https://arxiv.org/abs/1812.06127)
+- [Reddi et al., *Adaptive federated optimization*, ICLR 2021. (FedAdam)](https://arxiv.org/abs/2003.00295)
