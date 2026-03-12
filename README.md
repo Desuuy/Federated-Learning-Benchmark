@@ -265,7 +265,7 @@ jupyter notebook Fed_FMNIST/FMNIST_FedAvg.ipynb
 
 ## Report
 
-- **Full PDF**: [`Report_FL_Compare.pdf`](Report_FL_Compare.pdf)
+- **Full PDF**: [`FL_Benchmark_Report`](FL_Benchmark_Report.pdf)
 
 ## Authors & acknowledgement
 
