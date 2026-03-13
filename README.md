@@ -63,8 +63,8 @@ The following table aggregates the final validation accuracy, the average valida
 | CIFAR-10      | 0.3 | FedProx   | **89.79**          | 86.87                              | 12671            |
 | CIFAR-10      | 0.3 | FedAdam   | 89.38              | **88.74**                          | 10585            |
 | CIFAR-10      | 0.9 | FedAvg    | 89.56              | 88.29                              | **10401**        |
-| CIFAR-10      | 0.9 | FedProx   | **91.46**          | **91.26**                          | 13038            |
-| CIFAR-10      | 0.9 | FedAdam   | 91.24              | 91.36                              | 10589            |
+| CIFAR-10      | 0.9 | FedProx   | **91.46**          | 91.26                          | 13038            |
+| CIFAR-10      | 0.9 | FedAdam   | 91.24              | **91.36**                              | 10589            |
 
 </div>
 
