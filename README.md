@@ -6,7 +6,7 @@
 
 A reproducible benchmark comparing **FedAvg**, **FedProx**, and **FedAdam** on **CIFAR-10** and **Fashion-MNIST** under **non-IID client data** (Dirichlet split with **$$\( \alpha \in \{0.3, 0.9\}\)$$.**
 
-This repository contains experiment notebooks, result artifacts and a full report in PDF.
+This repository contains experiment notebooks, result artifacts, and a full report in PDF.
 
 ## Project context
 
