@@ -76,14 +76,14 @@ The following table aggregates the final validation accuracy, the average valida
     <tr>
       <td align="center">
         <img src="Imgs/fed_cifar10.png"
-             alt="CIFAR-10 training and validation accuracy"
+             alt="CIFAR-10 training and validation accuracy."
              width="75%" />
         <br />
         <strong>CIFAR-10</strong>
       </td>
       <td align="center">
         <img src="Imgs/fed_fmnist.png"
-             alt="Fashion-MNIST training and validation accuracy"
+             alt="Fashion-MNIST training and validation accuracy."
              width="75%" />
         <br />
         <strong>Fashion-MNIST</strong>
